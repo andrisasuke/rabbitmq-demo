@@ -8,11 +8,11 @@ import (
 
 func main() {
 	conn, err := amqp.Dial("amqp://admin:admin@localhost:5672/")
-	util.FailOnError(err, "Failed to connect to RabbitMQ")
+	util.FailOnError(err, "Failed to connect to rabbit_mq")
 	defer conn.Close()
 
 	ch, err := conn.Channel()
-	util.FailOnError(err, "Failed to open a channel")
+	util.FailOnError(err, "Failed to open rabbit_mq channel")
 	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
