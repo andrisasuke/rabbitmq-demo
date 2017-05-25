@@ -6,7 +6,6 @@ import (
 	"github.com/streadway/amqp"
 )
 
-
 func main() {
 	conn, err := amqp.Dial("amqp://admin:admin@localhost:5672/")
 	util.FailOnError(err, "Failed to connect to RabbitMQ")
@@ -37,15 +36,25 @@ func main() {
 	)
 	util.FailOnError(err, "Failed to register a consumer")
 
-	receiver := make(chan bool)
-
+	receiver := make(chan bool, 10)
+	mailSender := make(chan string, 10)
 	go func() {
 		for d := range msgs {
-			log.Printf("Received a message: %s", d.Body)
+			log.Printf("Received a message from rabbit_mq: %s", string(d.Body))
+			mailSender <- string(d.Body)
+
+		}
+	}()
+
+	go func() {
+		for d := range mailSender {
+			log.Printf("Sending a email message: %s", d)
 			//todo send email action
 		}
 	}()
 
 	log.Printf(" [*] Waiting for messages. To shutdown email receiver press CTRL+C")
 	<-receiver
+	<-mailSender
 }
+
