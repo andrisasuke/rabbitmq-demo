@@ -1,0 +1,23 @@
+development:
+  rabbitmq_uri:           amqp://admin:admin@localhost:5672/
+  smtp_user_account: dev_xxx@gmail.com
+  smtp_user_password: dev_pasword
+  smtp_address: smtp.gmail.com:587
+  smtp_host: smtp.gmail.com
+  email_queue: email_q
+
+local:
+  rabbitmq_uri:           amqp://admin:admin@localhost:5672/
+  smtp_user_account: test_xxx@gmail.com
+  smtp_user_password: test_pasword
+  smtp_address: smtp.gmail.com:587
+  smtp_host: smtp.gmail.com
+  email_queue: email_q
+
+production:
+  rabbitmq_uri:           amqp://admin:admin@localhost:5672/
+  smtp_user_account: dev_xxx@gmail.com
+  smtp_user_password: prod_password
+  smtp_address: smtp.gmail.com:587
+  smtp_host: smtp.gmail.com
+  email_queue: email_q

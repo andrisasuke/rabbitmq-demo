@@ -3,18 +3,15 @@ package main
 import (
 	"log"
 	"rabbitmq-demo/util"
+	"rabbitmq-demo/model"
 	"github.com/streadway/amqp"
 	"encoding/json"
 )
 
-type Email struct {
-	To string 	`json:"to"`
-	Subject string	`json:"subject"`
-	Body string	`json:"body"`
-}
 
 func main() {
-	conn, err := amqp.Dial("amqp://admin:admin@localhost:5672/")
+	ReadConfig()
+	conn, err := amqp.Dial(Config.RabbitMQUri)
 	util.FailOnError(err, "Failed to connect to rabbit_mq")
 	defer conn.Close()
 
@@ -23,7 +20,7 @@ func main() {
 	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
-		"email_q", // name
+		Config.EmailQueue, // name
 		false,   // durable
 		false,   // delete when unused
 		false,   // exclusive
@@ -55,13 +52,14 @@ func main() {
 	go func() {
 		for d := range mailSender {
 			log.Println("consume message ", d)
-			var email Email
+			var email model.Email
 			err := json.Unmarshal([]byte(d), &email)
 			if err != nil {
 				log.Println("Error while decoding message ", err)
 			} else {
 				log.Printf("Sending a email message: %s", email)
-				er, _ := util.Send(email.To, email.Subject, email.Body)
+				er, _ := util.Send(email.To, email.Subject, email.Body, Config.SmtpUserAccount,
+				 		   Config.SmtpPasswordAccount, Config.SmtpHost, Config.SmtpAddress )
 				if er != nil {
 					log.Printf("Failed to sending email message: %s", er)
 				} else {

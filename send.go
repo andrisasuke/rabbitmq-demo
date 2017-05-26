@@ -1,5 +1,5 @@
 package main
-
+/*
 import (
 	"log"
 	"github.com/streadway/amqp"
@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+	ReadConfig()
 	conn, err := amqp.Dial("amqp://admin:admin@localhost:5672/")
 	util.FailOnError(err, "Failed to connect to rabbit_mq")
 	defer conn.Close()
@@ -37,4 +38,6 @@ func main() {
 		})
 	log.Printf(" [x] Sent %s", body)
 	util.FailOnError(err, "Failed to publish a message")
+
 }
+*/
