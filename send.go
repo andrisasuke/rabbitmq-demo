@@ -25,7 +25,7 @@ func main() {
 	)
 	util.FailOnError(err, "Failed to declare a email queue")
 
-	body := "{ 'sender': 'receiver@gmail.com', 'subject': 'Your_subject'  'body' : 'this is the message body'}"
+	body := `{ "to": "receiver@gmail.com", "subject": "Your_subject" , "body" : "this is the message body"}`
 	err = ch.Publish(
 		"",     // exchange
 		q.Name, // routing key

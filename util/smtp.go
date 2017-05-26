@@ -5,9 +5,9 @@ import (
 	"log"
 )
 
-func Send(to string, subject string, body string) {
-	from := "rabbitmq-demo@gmail.com"
-	pass := "xxx"
+func Send(to string, subject string, body string) (error, string) {
+	from := "development.xx@gmail.com"
+	pass := "your_password"
 	msg := "From: " + from + "\n" +
 		"To: " + to + "\n" +
 		"Subject: "+subject+"\n\n" +
@@ -19,8 +19,10 @@ func Send(to string, subject string, body string) {
 
 	if err != nil {
 		log.Printf("smtp error: %s", err)
-		return
+		return err, "Failed"
+	} else {
+		log.Print("message sent to "+ to)
+		return nil, "Ok"
 	}
 
-	log.Print("message sent to "+ to)
 }
