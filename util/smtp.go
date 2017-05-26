@@ -4,9 +4,10 @@ import (
 	"net/smtp"
 	"log"
 )
-
+// Sometime need to change security setting on your google account setting :
+// Connected apps & sites -> Allow less secure apps (ON)
 func Send(to string, subject string, body string) (error, string) {
-	from := "development.xx@gmail.com"
+	from := "google_account_xxx@gmail.com"
 	pass := "your_password"
 	msg := "From: " + from + "\n" +
 		"To: " + to + "\n" +
