@@ -3,5 +3,6 @@ RabbitMQ golang consumer
 1. Download and install RabbitMQ https://www.rabbitmq.com/#getstarted
 2. Install Golang (mine is v1.6)
 3. Checkout into your $GOPATH
-4. Put to queue : $ go run send.go
-5. Consume from queue : $ go run receive.go
+4. Install dependency amq : $ go get github.com/streadway/amqp
+5. Put to queue : $ go run send.go
+6. Consume from queue : $ go run receive.go
