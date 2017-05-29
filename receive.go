@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 )
 
-
 func main() {
 	ReadConfig()
 	conn, err := amqp.Dial(Config.RabbitMQUri)
@@ -49,26 +48,27 @@ func main() {
 		}
 	}()
 
-	go func() {
-		for d := range mailSender {
-			log.Println("consume message ", d)
-			var email model.Email
-			err := json.Unmarshal([]byte(d), &email)
-			if err != nil {
-				log.Println("Error while decoding message ", err)
-			} else {
-				log.Printf("Sending a email message: %s", email)
-				er, _ := util.Send(email.To, email.Subject, email.Body, Config.SmtpUserAccount,
-				 		   Config.SmtpPasswordAccount, Config.SmtpHost, Config.SmtpAddress )
-				if er != nil {
-					log.Printf("Failed to sending email message: %s", er)
+	for i := 1; i <= Config.EmailSenderWorker ; i++ {
+		go func() {
+			for d := range mailSender {
+				log.Printf("consume message %s by worker - %s", d, i)
+				var email model.Email
+				err := json.Unmarshal([]byte(d), &email)
+				if err != nil {
+					log.Println("Error while decoding message ", err)
 				} else {
-					log.Printf("Message has been sent to: %s", email.To)
+					log.Printf("Sending a email message: %s by worker - %s", email, i)
+					er, _ := util.Send(email.To, email.Subject, email.Body, Config.SmtpUserAccount,
+						Config.SmtpPasswordAccount, Config.SmtpHost, Config.SmtpAddress)
+					if er != nil {
+						log.Printf("Failed to sending email message: %s", er)
+					} else {
+						log.Printf("Message has been sent to: %s", email.To)
+					}
 				}
 			}
-		}
-	}()
-
+		}()
+	}
 	log.Printf(" [*] Waiting for messages. To shutdown email receiver press CTRL+C")
 	<-receiver
 }

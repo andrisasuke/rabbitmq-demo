@@ -4,6 +4,7 @@ import (
 	"log"
 	"fmt"
 	"github.com/spf13/viper"
+	"strconv"
 )
 
 type AppConfig struct {
@@ -13,6 +14,7 @@ type AppConfig struct {
 	SmtpHost	    string
 	SmtpAddress	    string
 	EmailQueue  	    string
+	EmailSenderWorker   int
 }
 
 var Config *AppConfig
@@ -34,6 +36,11 @@ func ReadConfig()  {
 
 	config := viper.GetStringMapString(viper.GetString("env"))
 
+	mailSenderWorker, e := strconv.Atoi(config["email_sender_worker"])
+	if e != nil {
+		panic(e)
+	}
+
 	Config = &AppConfig{
 		RabbitMQUri:    config["rabbitmq_uri"],
 		SmtpUserAccount:   config["smtp_user_account"],
@@ -41,5 +48,6 @@ func ReadConfig()  {
 		SmtpHost: config["smtp_host"],
 		SmtpAddress: config["smtp_address"],
 		EmailQueue:  config["email_queue"],
+		EmailSenderWorker: mailSenderWorker,
 	}
 }
