@@ -13,5 +13,5 @@ jobs:
           - run: go build
           - store_artifacts:
                     path: /go/src/rabbitmq-demo/rabbitmq-demo
-                    destination: builds
+                    destination: builds/rabbitmq-demo
 
