@@ -11,3 +11,8 @@ jobs:
           - checkout
           - run: go get
           - run: go build
+          - run: make
+          - store_artifacts:
+                    path: /tmp/test-results
+                    destination: raw-test-output
+
