@@ -6,7 +6,7 @@ import (
 	"rabbitmq-demo/util"
 )
 
-func main() {
+func Send() {
 	conn, err := amqp.Dial("amqp://admin:admin@localhost:5672/")
 	util.FailOnError(err, "Failed to connect to rabbit_mq")
 	defer conn.Close()
