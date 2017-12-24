@@ -12,6 +12,6 @@ jobs:
           - run: go get
           - run: go build
           - store_artifacts:
-                    path: /tmp/test-results
+                    path: /go/src/rabbitmq-demo
                     destination: raw-test-output
 
