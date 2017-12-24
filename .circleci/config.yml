@@ -1,0 +1,9 @@
+version: 2
+jobs:
+  build:
+    working_directory: /go/src/github.com/andrisasuke/rabbitmq-demo
+
+    steps:
+          - checkout
+          - run: go get
+          - run: go build
