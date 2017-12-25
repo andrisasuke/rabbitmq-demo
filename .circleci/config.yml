@@ -9,7 +9,8 @@ jobs:
 
     steps:
           - checkout
-          - run: go get
+          - run: go get github.com/tools/godep
+          - run: godep restore
           - run: go build
           - store_artifacts:
                     path: /go/src/rabbitmq-demo/rabbitmq-demo

@@ -27,6 +27,7 @@ func ReadConfig()  {
 	viper.AddConfigPath("/etc/rabbitmq_consumer/")
 	viper.AddConfigPath("$HOME/.rabbitmq_consumer")
 	viper.AddConfigPath("./config")
+	viper.AddConfigPath(".")
 	viper.AddConfigPath("/Data/")
 	viper.SetConfigType("yaml")
 	err := viper.ReadInConfig()
