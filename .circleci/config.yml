@@ -11,7 +11,7 @@ jobs:
           - checkout
           - run: go get github.com/tools/godep
           - run: godep restore
-          - run: go build
+          - run: godep go build
           - store_artifacts:
                     path: /go/src/rabbitmq-demo/rabbitmq-demo
                     destination: builds/rabbitmq-demo
