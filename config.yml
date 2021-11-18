@@ -1,26 +1,5 @@
 development:
-  rabbitmq_uri:           amqp://guest:guest@localhost:5672/
-  smtp_user_account: dev_xxx@gmail.com
-  smtp_user_password: dev_pasword
-  smtp_address: smtp.gmail.com:587
-  smtp_host: smtp.gmail.com
-  email_queue: email_q
-  email_sender_worker: 5
-
-local:
-  rabbitmq_uri:           amqp://guest:guest@localhost:5672/
-  smtp_user_account: test_xxx@gmail.com
-  smtp_user_password: test_pasword
-  smtp_address: smtp.gmail.com:587
-  smtp_host: smtp.gmail.com
-  email_queue: email_q
-  email_sender_worker: 5
-
-production:
-  rabbitmq_uri:           amqp://guest:guest@localhost:5672/
-  smtp_user_account: dev_xxx@gmail.com
-  smtp_user_password: prod_password
-  smtp_address: smtp.gmail.com:587
-  smtp_host: smtp.gmail.com
+  rabbitmq_uri: amqp://guest:guest@localhost:5672/
+  smtp_host: 'mail.smtpbucket.com:8025'
   email_queue: email_q
   email_sender_worker: 5

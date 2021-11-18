@@ -1,30 +1,28 @@
 package util
 
 import (
-	"net/smtp"
 	"log"
+	"net/smtp"
+	"rabbitmq-demo/configs"
 )
-// Sometime need to change security setting on your google account setting :
-// Connected apps & sites -> Allow less secure apps (ON)
-func Send(to string, subject string, body string, smtpUser string, smtpPassw string,
-	  smtpHost string, smtpAddr string ) (error, string) {
+
+func Send(to string, subject string, body string, smtpUser string) error {
 	from := smtpUser
-	pass := smtpPassw
+	//pass := smtpPassw
 	msg := "From: " + from + "\n" +
 		"To: " + to + "\n" +
-		"Subject: "+subject+"\n\n" +
+		"Subject: " + subject + "\n\n" +
 		body
 
-	err := smtp.SendMail(smtpAddr,
-		smtp.PlainAuth("", from, pass, smtpHost),
+	err := smtp.SendMail(configs.Config.SmtpAddress, nil,
 		from, []string{to}, []byte(msg))
 
 	if err != nil {
 		log.Printf("smtp error: %s", err)
-		return err, "Failed"
+		return err
 	} else {
-		log.Print("message sent to "+ to)
-		return nil, "Ok"
+		log.Print("message sent to " + to)
+		return nil
 	}
 
 }
